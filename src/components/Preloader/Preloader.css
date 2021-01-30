@@ -1,0 +1,13 @@
+
+.preloader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.album_preloader{
+  width: 20px;
+  height: 20px;
+}

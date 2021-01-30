@@ -1,0 +1,15 @@
+
+.error {
+  font-size: 18px;
+  line-height: 21px;
+}
+.error_container {
+  display: flex;
+  width: 150px;
+  height: 150px;
+  color: #ffffff;
+
+  background-color: #000000;
+  margin-bottom: 20px;
+  padding: 10px;
+}
