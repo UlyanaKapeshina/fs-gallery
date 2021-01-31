@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { api } from './../../api';
 import Preloader from './../Preloader/Preloader';
 import ErrorMessage from './../Error/ErrorMessage';
 import { useLocation, useParams } from 'react-router-dom';
-
-import './Albums.css';
+import UserContext from './../../contexts/user-context';
 import Axios from 'axios';
-
 import Albums from './Albums';
 
-function AlbumsContainer(props) {
+import './Albums.css';
+
+function AlbumsContainer() {
   const { userId } = useParams();
   let location = useLocation();
   const currentUser = location.state && location.state.user;
-  const isAuth = props.isAuth;
+  const { isAuth } = useContext(UserContext);
 
   const [albums, setAlbums] = useState([]);
   const [user, setUser] = useState(currentUser);
@@ -34,7 +34,6 @@ function AlbumsContainer(props) {
       api
         .getUser(userId, isAuth, userId)
         .then((result) => {
-          // debugger;
           setUser(result);
         })
         .catch((error) => {
@@ -51,8 +50,8 @@ function AlbumsContainer(props) {
   }, []);
 
   const onSubmitHandler = (title) => {
-    const addAlbum = api
-      .addAlbum(title)
+    api
+      .addAlbum(title, userId)
       .then(() => {
         return api
           .getAlbums(userId, isAuth)
@@ -69,8 +68,8 @@ function AlbumsContainer(props) {
   };
   const onRemoveClick = (id) => {
     setIsLoaded(false);
-    api.removeAlbum(id).then(() =>
-      {return api
+    api.removeAlbum(id).then(() => {
+      return api
         .getAlbums(userId, isAuth)
         .then((result) => {
           setAlbums(result);
@@ -79,8 +78,8 @@ function AlbumsContainer(props) {
         .catch((error) => {
           setError(error);
           setIsLoaded(true);
-        });}
-    );
+        });
+    });
   };
 
   if (!isLoaded) {
@@ -90,7 +89,7 @@ function AlbumsContainer(props) {
   } else if (!albums || !user) {
     return <Preloader />;
   } else if (isLoaded) {
-    return <Albums albums={albums} isAuth={isAuth} submit={onSubmitHandler} user={user} onRemoveClick={onRemoveClick} />;
+    return <Albums albums={albums} submit={onSubmitHandler} user={user} onRemoveClick={onRemoveClick} />;
   }
 }
 

@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { api } from './../../api';
 import Preloader from './../Preloader/Preloader';
 import ErrorMessage from './../Error/ErrorMessage';
 import { useLocation, useParams } from 'react-router-dom';
+import  UserContext  from './../../contexts/user-context';
 import Axios from 'axios';
 
-import './Photos.css';
 import Photos from './Photos';
+import './Photos.css';
 
 function PhotosContainer(props) {
   let location = useLocation();
   const { userId } = useParams();
   const currentPhotos = location.state && location.state.currentPhotos;
   const currentTitle = location.state && location.state.currentTitle;
-  const isAuth = props.isAuth;
-
+  const {isAuth }= useContext(UserContext);
   const { albumId, photoId } = useParams();
   const [photos, setPhotos] = useState(currentPhotos);
   const [title, setTitle] = useState(currentTitle);
@@ -26,13 +26,14 @@ function PhotosContainer(props) {
   useEffect(() => {
     const getAlbum =
       photos ||
-      api.getAlbum(albumId).then((album) => {
-        setTitle(title);
+      api.getAlbum(albumId, userId, isAuth).then((album) => {
+
+        setTitle(album.title);
       });
     const getPhotos =
       title ||
       api.getPhotos(albumId, userId, isAuth).then((photos) => {
-        // debugger;
+
         setPhotos(photos);
         if (!photoId) {
           return;
@@ -78,20 +79,18 @@ function PhotosContainer(props) {
   };
   const onRemoveClick = (id) => {
     setIsLoaded(false);
-    // api.removeAlbum(id).then(
-
-    //   api
-    //       .getAlbums(userId, isAuth)
-    //       .then((result) => {
-    //         setAlbums(result);
-    //         setIsLoaded(true);
-    //       })
-    //       .catch((error) => {
-    //         setError(error);
-    //         setIsLoaded(true);
-    //       })
-
-    // );
+    api.removePhoto(id).then(() => {
+      return api
+        .getPhotos(albumId, null, isAuth)
+        .then((result) => {
+          setPhotos(result);
+          setIsLoaded(true);
+        })
+        .catch((error) => {
+          setError(error);
+          setIsLoaded(true);
+        });
+    });
   };
 
   if (!isLoaded || !photos) {
@@ -106,7 +105,6 @@ function PhotosContainer(props) {
         modal={isModal}
         photo={currentPhoto}
         history={props.history}
-        isAuth={isAuth}
         submit={onSubmitHandler}
         onRemoveClick={onRemoveClick}
       />

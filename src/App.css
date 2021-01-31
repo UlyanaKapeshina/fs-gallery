@@ -1,21 +1,22 @@
 .App {
-  width: 320px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding-left: 30px;
-  padding-right: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fff;
+    width: 320px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding-left: 30px;
+    padding-right: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
 }
+
 .main {
-  width: 100%;
+    width: 100%;
 }
 
 @media (min-width: 768px) {
-  .App {
-    width: 768px;
-  }
+    .App {
+        width: 768px;
+    }
 }

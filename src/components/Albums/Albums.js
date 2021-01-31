@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { api } from './../../api';
-import './Albums.css';
+import React, { useState, useContext } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
 import { ReactComponent as Before } from './../Photos/navigate_before-24px.svg';
 import AlbumContainer from './AlbumContainer';
 import PropTypes from 'prop-types';
+import UserContext from './../../contexts/user-context';
+import './Albums.css';
 
 function Albums(props) {
-  // debugger;
-  const { albums, isAuth, submit, user, onRemoveClick } = props;
+  const { albums, submit, user, onRemoveClick } = props;
+  const { isAuth, id } = useContext(UserContext);
+  const { userId } = useParams();
 
+  const isCurrentUser = Number(userId) === id;
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [title, setTitle] = useState('');
   const onSubmitHandler = (evt) => {
@@ -18,7 +20,7 @@ function Albums(props) {
   };
 
   const albumsList = albums.map((it) => {
-    return <AlbumContainer albumId={it.id} title={it.title} key={it.albumId} isAuth={isAuth} onRemoveClick={onRemoveClick} />;
+    return <AlbumContainer albumId={it.id} title={it.title} key={it.id} onRemoveClick={onRemoveClick} />;
   });
 
   const clickHandler = () => {
@@ -45,7 +47,7 @@ function Albums(props) {
         <Before />
         go to users
       </NavLink>
-      {isAuth && !isFormOpen && (
+      {isAuth && isCurrentUser && !isFormOpen && (
         <div>
           <button className='albums_add' onClick={clickHandler}>
             Create album
@@ -68,7 +70,7 @@ function Albums(props) {
         </form>
       )}
       {albums.length > 0 && <ul className='albums_list'>{albumsList}</ul>}
-      {albums.length < 1 && <p p>Альбомов нет</p>}
+      {albums.length < 1 && <p>Альбомов нет</p>}
     </section>
   );
 }
@@ -82,8 +84,8 @@ Albums.propTypes = {
       title: PropTypes.string.isRequired,
     })
   ).isRequired,
-  // user: PropTypes.shape({
-  //   id: PropTypes.number.isRequired,
-  //   name: PropTypes.string.isRequired,
-  // }).isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
 };

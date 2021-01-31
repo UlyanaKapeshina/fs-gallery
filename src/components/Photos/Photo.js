@@ -12,14 +12,12 @@ function Photo(props) {
 
   const onLeftClickHandler = () => {
     const photoIndex = photos.findIndex((it) => it.id === currentPhoto.id) - 1;
-    // debugger;
     const newPhoto = photos[photoIndex] || currentPhoto;
     setCurrentPhoto(newPhoto);
     changeUrl(newPhoto.id);
   };
   const onRightClickHandler = () => {
     const photoIndex = photos.findIndex((it) => it.id === currentPhoto.id) + 1;
-    // debugger;
     const newPhoto = photos[photoIndex] || currentPhoto;
     setCurrentPhoto(newPhoto);
     changeUrl(newPhoto.id);

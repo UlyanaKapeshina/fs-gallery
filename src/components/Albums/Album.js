@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import UserContext from './../../contexts/user-context';
 import './Albums.css';
-
 function Album(props) {
-  const { photos, albumId, title, isAuth, onRemoveClick } = props;
-  // debugger
-
+  const { photos, albumId, title, onRemoveClick } = props;
+  const { userId } = useParams();
+  const isAuth = useContext(UserContext).isAuth;
+  const isCurrentUser = Number(userId) === Number(useContext(UserContext).id);
   const [isFocus, setIsFocus] = useState(false);
 
   const onMouseOver = () => {
@@ -17,8 +18,8 @@ function Album(props) {
   };
 
   const url = `albums/${albumId}/photos`;
-  const photoTitle = title.length > 16 ? `${title.slice(0, 16)}...` : title;
-  const fullTitle = isFocus ? title : photoTitle;
+  const shortTitle = title.length > 16 ? `${title.slice(0, 16)}...` : title;
+  const fullTitle = isFocus ? title : shortTitle;
   let src = '';
   if (photos.length > 0) {
     src = photos[0] && photos[0].thumbnailUrl ? photos[0].thumbnailUrl : '';
@@ -33,17 +34,16 @@ function Album(props) {
           state: {
             currentPhotos: photos,
             currentTitle: title,
-            isAuth: isAuth,
           },
         }}
       >
-        {src && <img className='album_img' src={src} />}
+        {src && <img className='album_img' src={src} alt={title} />}
         <div className='album_info' onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
           <p className='album_name'>{fullTitle}</p>
           <p className='album_count'>{photos.length}</p>
         </div>
       </NavLink>
-      {isAuth && (
+      {isAuth && isCurrentUser && (
         <button className='album_removeButton' onClick={() => onRemoveClick(albumId)}>
           х
         </button>

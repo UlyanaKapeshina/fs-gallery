@@ -8,7 +8,7 @@ function UsersContainer(props) {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const isAuth = props.isAuth;
+
 
   useEffect(() => {
     api
@@ -30,7 +30,7 @@ function UsersContainer(props) {
   } else if (!users) {
     return <Preloader />;
   } else if (isLoaded) {
-    return <Users users={users} isAuth={isAuth} />;
+    return <Users users={users}  />;
   }
 }
 

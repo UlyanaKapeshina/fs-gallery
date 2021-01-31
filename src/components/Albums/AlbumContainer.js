@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { api } from './../../api';
 import Preloader from './../Preloader/Preloader';
 import ErrorMessage from './../Error/ErrorMessage';
 import { NavLink, useParams } from 'react-router-dom';
 import Album from './Album';
+import UserContext from './../../contexts/user-context';
 import './Albums.css';
 
 function AlbumContainer(props) {
-  const { albumId, title, isAuth, onRemoveClick } = props;
+  const { albumId, title, onRemoveClick } = props;
   const { userId } = useParams();
+  const { isAuth } = useContext(UserContext);
 
   const [photos, setPhotos] = useState([]);
   const [error, setError] = useState(null);
@@ -22,7 +24,6 @@ function AlbumContainer(props) {
         setIsLoaded(true);
       })
       .catch((error) => {
-        console.log(error.message);
         setError(error);
         setIsLoaded(true);
       });
@@ -37,7 +38,7 @@ function AlbumContainer(props) {
           }}
           aria-label='open photos'
         >
-          <img className='album_img' src='' />
+          <img className='album_img'  alt='image not load' />
           <div className='album_info'>
             <p className='album_name'>{title}</p>
             <Preloader className='album_preloader' />
@@ -52,7 +53,7 @@ function AlbumContainer(props) {
       </div>
     );
   } else if (isLoaded) {
-    return <Album photos={photos} albumId={albumId} title={title} isAuth={isAuth} onRemoveClick={onRemoveClick} />;
+    return <Album photos={photos} albumId={albumId} title={title} onRemoveClick={onRemoveClick} />;
   }
 }
 
