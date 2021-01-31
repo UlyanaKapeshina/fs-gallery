@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { ReactComponent as Next } from './navigate_next-24px.svg';
-import { ReactComponent as Before } from './navigate_before-24px.svg';
+import React, {useState, useEffect} from 'react';
+import {ReactComponent as Next} from './navigate_next-24px.svg';
+import {ReactComponent as Before} from './navigate_before-24px.svg';
 import PropTypes from 'prop-types';
 import './Photos.css';
-
 function Photo(props) {
-  const { photo, photos, closePhotoHandler, changeUrl } = props;
+  const {photo, photos, closePhotoHandler, changeUrl} = props;
   const [currentPhoto, setCurrentPhoto] = useState(photo);
   const isFirst = photos[0].id === currentPhoto.id;
   const isLast = photos[photos.length - 1].id === currentPhoto.id;

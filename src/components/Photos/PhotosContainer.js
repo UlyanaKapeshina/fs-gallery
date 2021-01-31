@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { api } from './../../api';
+import React, {useState, useEffect, useContext} from 'react';
+import {api} from './../../api';
 import Preloader from './../Preloader/Preloader';
 import ErrorMessage from './../Error/ErrorMessage';
-import { useLocation, useParams } from 'react-router-dom';
-import  UserContext  from './../../contexts/user-context';
+import {useLocation, useParams} from 'react-router-dom';
+import UserContext from './../../contexts/user-context';
 import Axios from 'axios';
 
 import Photos from './Photos';
@@ -11,11 +11,11 @@ import './Photos.css';
 
 function PhotosContainer(props) {
   let location = useLocation();
-  const { userId } = useParams();
+  const {userId} = useParams();
   const currentPhotos = location.state && location.state.currentPhotos;
   const currentTitle = location.state && location.state.currentTitle;
-  const {isAuth }= useContext(UserContext);
-  const { albumId, photoId } = useParams();
+  const {isAuth} = useContext(UserContext);
+  const {albumId, photoId} = useParams();
   const [photos, setPhotos] = useState(currentPhotos);
   const [title, setTitle] = useState(currentTitle);
   const [error, setError] = useState(null);
@@ -27,13 +27,11 @@ function PhotosContainer(props) {
     const getAlbum =
       photos ||
       api.getAlbum(albumId, userId, isAuth).then((album) => {
-
         setTitle(album.title);
       });
     const getPhotos =
       title ||
       api.getPhotos(albumId, userId, isAuth).then((photos) => {
-
         setPhotos(photos);
         if (!photoId) {
           return;

@@ -1,11 +1,11 @@
-import React , {useContext}from 'react';
-import { NavLink } from 'react-router-dom';
+import React, {useContext} from 'react';
+import {NavLink} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import  UserContext  from './../../contexts/user-context';
+import UserContext from './../../contexts/user-context';
 import './Users.css';
 
 function Users(props) {
-  const { users } = props;
+  const {users} = props;
   const user = useContext(UserContext);
 
   const usersList = users.map((it) => {

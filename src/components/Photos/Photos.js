@@ -1,23 +1,23 @@
-import React, { useState, useContext } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import React, {useState, useContext} from 'react';
+import {NavLink, useParams} from 'react-router-dom';
 import Photo from './Photo';
 import PropTypes from 'prop-types';
-import  UserContext  from './../../contexts/user-context';
-import { ReactComponent as Before } from './navigate_before-24px.svg';
+import UserContext from './../../contexts/user-context';
+import {ReactComponent as Before} from './navigate_before-24px.svg';
 import './Photos.css';
 
 function Photos(props) {
-  const { userId, albumId } = useParams();
-  const { photos, title, modal, photo, history, onRemoveClick, submit } = props;
+  const {userId, albumId} = useParams();
+  const {photos, title, modal, photo, history, onRemoveClick, submit} = props;
   const [isModal, setIsModal] = useState(modal);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [currentPhoto, setCurrentPhoto] = useState(photo);
   const [photoTitle, setPhotoTitle] = useState('');
   const [selectedFile, setSelectedFile] = useState('');
-   const [message, setMessage] = useState(null);
-   const {isAuth, id }= useContext(UserContext);
+  const [message, setMessage] = useState(null);
+  const {isAuth, id} = useContext(UserContext);
 
-  const isCurrentUser = Number(userId)=== id;
+  const isCurrentUser = Number(userId) === id;
   const ref = React.createRef();
 
   const photoKeyPressHandler = (evt, photo) => {
@@ -45,7 +45,6 @@ function Photos(props) {
       submit(photoTitle, selectedFile);
       setSelectedFile(null);
       setPhotoTitle('');
-
     }
   };
   const clickHandler = () => {
@@ -58,7 +57,7 @@ function Photos(props) {
     setPhotoTitle(evt.target.value);
   };
   const handleFileInput = (e) => {
-     let error = null;
+    let error = null;
     if (e.currentTarget.files.length > 0) {
       const photo = e.currentTarget.files[0];
       error = validateImage(photo);
@@ -68,17 +67,17 @@ function Photos(props) {
     }
     setMessage(error);
   };
-  const validateImage = file => {
-  const file_type = file.name.split(".").pop();
-  const fileSize = 1024 * 1024 * 10;
-  if (file_type !== "jpeg" && file_type !== "jpg" && file_type !== "png") {
-    return "Допускаются файлы только jpeg, jpg, png";
-  }
-  if (file.size > fileSize) {
-    return "Выбранный файл не должен превышать 10МБ";
-  }
-  return;
-};
+  const validateImage = (file) => {
+    const file_type = file.name.split('.').pop();
+    const fileSize = 1024 * 1024 * 10;
+    if (file_type !== 'jpeg' && file_type !== 'jpg' && file_type !== 'png') {
+      return 'Допускаются файлы только jpeg, jpg, png';
+    }
+    if (file.size > fileSize) {
+      return 'Выбранный файл не должен превышать 10МБ';
+    }
+    return;
+  };
   const photosList = photos.map((it) => {
     return (
       <li key={it.id} ref={ref} className='photos_items' tabIndex='0' onKeyPress={(evt) => photoKeyPressHandler(evt, it)}>
@@ -91,10 +90,10 @@ function Photos(props) {
           aria-label='open modal'
         />
         {isAuth && isCurrentUser && (
-        <button className='album_removeButton' onClick={() => onRemoveClick(it.id)}>
-          х
-        </button>
-      )}
+          <button className='album_removeButton' onClick={() => onRemoveClick(it.id)}>
+            х
+          </button>
+        )}
       </li>
     );
   });
@@ -128,7 +127,7 @@ function Photos(props) {
             load photo file
             <input className='photo_file-field' type='file' onChange={handleFileInput} />
           </label>
-          {message && <p className="photo_error">{message}</p>}
+          {message && <p className='photo_error'>{message}</p>}
           <div className='photo_buttons'>
             <button className='photo_submit' type='submit' disabled={!(photoTitle && selectedFile)}>
               Add photo
@@ -159,7 +158,6 @@ Photos.propTypes = {
       url: PropTypes.string.isRequired,
     })
   ).isRequired,
-
   title: PropTypes.string.isRequired,
   modal: PropTypes.bool.isRequired,
   photo: PropTypes.object,

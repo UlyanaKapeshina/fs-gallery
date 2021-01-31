@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { api } from './../../api';
+import React, {useEffect, useState} from 'react';
+import {api} from './../../api';
 import Preloader from './../Preloader/Preloader';
 import ErrorMessage from './../Error/ErrorMessage';
 import Users from './Users';
@@ -8,7 +8,6 @@ function UsersContainer(props) {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-
 
   useEffect(() => {
     api
@@ -30,7 +29,7 @@ function UsersContainer(props) {
   } else if (!users) {
     return <Preloader />;
   } else if (isLoaded) {
-    return <Users users={users}  />;
+    return <Users users={users} />;
   }
 }
 

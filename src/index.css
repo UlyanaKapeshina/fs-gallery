@@ -1,43 +1,43 @@
 body {
-  min-width: 320px;
-  padding: 0;
-  margin: 0;
-
-  font-family: "Roboto Condensed", Arial, sans-serif;
-  font-size: 13px;
-  line-height: 15px;
-  color: #000000;
-  font-style: normal;
-  background-color: #e5e5e5;
+    min-width: 320px;
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto Condensed', Arial, sans-serif;
+    font-size: 13px;
+    line-height: 15px;
+    color: #000000;
+    font-style: normal;
+    background-color: #e5e5e5;
 }
 
 img {
-  max-width: 100%;
-  height: auto;
+    max-width: 100%;
+    height: auto;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 html {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
+
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+    box-sizing: inherit;
 }
 
 .visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  border: 0;
-  padding: 0;
-  white-space: nowrap;
-  clip-path: inset(100%);
-  clip: rect(0 0 0 0);
-  overflow: hidden;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
 }

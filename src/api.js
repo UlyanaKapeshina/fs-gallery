@@ -16,9 +16,9 @@ export const api = {
   },
   getUser(id, isAuth, userId) {
     if (userId === currentUserId) {
-      return Promise.resolve({ name: 'Users albums', id: Number(currentUserId) });
+      return Promise.resolve({name: 'Users albums', id: Number(currentUserId)});
     } else if (isAuth) {
-      return Promise.resolve({ name: 'My albums', id: Number(currentUserId) });
+      return Promise.resolve({name: 'My albums', id: Number(currentUserId)});
     } else {
       return instance.get(`users/${id}`).then((response) => response.data);
     }
