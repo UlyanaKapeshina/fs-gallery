@@ -68,7 +68,7 @@ function Photos(props) {
     setMessage(error);
   };
   const validateImage = (file) => {
-    const file_type = file.name.split('.').pop();
+    const file_type = file.name.split('.').pop().toLowerCase();
     const fileSize = 1024 * 1024 * 10;
     if (file_type !== 'jpeg' && file_type !== 'jpg' && file_type !== 'png') {
       return 'Допускаются файлы только jpeg, jpg, png';

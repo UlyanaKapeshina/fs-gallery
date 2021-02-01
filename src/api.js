@@ -1,9 +1,9 @@
 import Axios from 'axios';
 const instance = Axios.create({
   baseURL: 'https://jsonplaceholder.typicode.com/',
-  timeout: 5000,
+  timeout: 20000,
 });
-const currentUserId = '1000';
+const currentUserId = String(1000);
 
 export const api = {
   getUsers() {
